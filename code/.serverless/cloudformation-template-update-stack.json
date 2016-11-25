@@ -48,6 +48,13 @@
                 "logs:PutLogEvents"
               ],
               "Resource": "arn:aws:logs:eu-west-1:*:*"
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:*"
+              ],
+              "Resource": "*"
             }
           ]
         },
@@ -65,7 +72,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aws-nodejs/dev/1480082935122-2016-11-25T14:08:55.122Z/aws-nodejs.zip"
+          "S3Key": "serverless/aws-nodejs/dev/1480111313230-2016-11-25T22:01:53.230Z/aws-nodejs.zip"
         },
         "FunctionName": "aws-nodejs-dev-hello",
         "Handler": "handler.hello",
@@ -78,6 +85,182 @@
         },
         "Runtime": "nodejs4.3",
         "Timeout": 6
+      }
+    },
+    "ResizeLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/aws-nodejs/dev/1480111313230-2016-11-25T22:01:53.230Z/aws-nodejs.zip"
+        },
+        "FunctionName": "aws-nodejs-dev-resize",
+        "Handler": "resize/index.resize",
+        "MemorySize": 1024,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs4.3",
+        "Timeout": 6
+      }
+    },
+    "S3BucketNgdworkshopuploads": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": "ngd-workshop-uploads",
+        "NotificationConfiguration": {
+          "LambdaConfigurations": [
+            {
+              "Event": "s3:ObjectCreated:*",
+              "Function": {
+                "Fn::GetAtt": [
+                  "ResizeLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Filter": {
+                "S3Key": {
+                  "Rules": [
+                    {
+                      "Name": "prefix",
+                      "Value": "image"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ResizeLambdaPermissionNgdworkshopuploadsS3": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "ResizeLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "s3.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:aws:s3:::ngd-workshop-uploads"
+            ]
+          ]
+        }
+      }
+    },
+    "ApiGatewayRestApi": {
+      "Type": "AWS::ApiGateway::RestApi",
+      "Properties": {
+        "Name": "dev-aws-nodejs"
+      }
+    },
+    "ApiGatewayResourceHello": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "hello",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayMethodHelloGet": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "GET",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceHello"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:aws:apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "HelloLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      }
+    },
+    "ApiGatewayDeployment1480111313237": {
+      "Type": "AWS::ApiGateway::Deployment",
+      "Properties": {
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "StageName": "dev"
+      },
+      "DependsOn": [
+        "ApiGatewayMethodHelloGet"
+      ]
+    },
+    "HelloLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "HelloLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:aws:execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "/*/*"
+            ]
+          ]
+        }
       }
     }
   },
@@ -93,6 +276,30 @@
         "Fn::GetAtt": [
           "HelloLambdaFunction",
           "Arn"
+        ]
+      }
+    },
+    "ResizeLambdaFunctionArn": {
+      "Description": "Lambda function info",
+      "Value": {
+        "Fn::GetAtt": [
+          "ResizeLambdaFunction",
+          "Arn"
+        ]
+      }
+    },
+    "ServiceEndpoint": {
+      "Description": "URL of the service endpoint",
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {
+              "Ref": "ApiGatewayRestApi"
+            },
+            ".execute-api.eu-west-1.amazonaws.com/dev"
+          ]
         ]
       }
     }

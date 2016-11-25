@@ -57,7 +57,7 @@ As you can see this is great for debugging and you can add these log messages an
 
 ### Making logs more searchable
 
-In CloudWatch Logs – To find your logs in CloudWatch you need to know the log group name and log stream name. You can get that information by adding the context.logGroupName, and context.logStreamName methods in your code. When you run your Lambda function, the resulting logs in the console or CLI will show you the log group name and log stream name.
+In CloudWatch Logs – To find your logs in CloudWatch you need to know the log group name and log stream name. You can get that information by adding the ```context.logGroupName```, and ```context.logStreamName``` methods in your code. When you run your Lambda function, the resulting logs in the console or CLI will show you the log group name and log stream name.
 
 ---
 Ric Harvey - ngineered.co.uk 2016
