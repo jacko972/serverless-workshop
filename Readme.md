@@ -23,6 +23,10 @@ If a file or directory is referenced in the documentation it will be highlighted
 
 some generic text about file ```xyz.zip``` that you need to look at.
 
+Important notes will be in bold like so:
+
+**Note: **This is an important note
+
 ## Clean up
 Once you've finsihed this Workshop to delete all the resources created run:
 
