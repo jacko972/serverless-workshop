@@ -64,7 +64,9 @@ To trigger our code to run you can do this via the AWS console but we'll use the
 
 What we are doing here is telling serverless to run the code and the function called hello. Our output should be like the following:
 
-```{
+```
+
+{
     "statusCode": 200,
     "body": "{\"message\":\"Go Serverless v1.0! Your function executed successfully!\",\"input\":{}}"
 }
