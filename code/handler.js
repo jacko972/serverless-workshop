@@ -2,11 +2,14 @@
 
 module.exports.hello = (event, context, callback) => {
 
+  const yourName = process.env.yourName
+
   const html = `
   <html>
     <body>
 	<h1>Serverless Workshop</h1>
-	<p>hello world of serverless</h1>
+	<p>hello world of serverless<br/>
+	Created by ` + yourName + `</p>
     </body>
   </html>`
 

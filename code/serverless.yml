@@ -61,6 +61,8 @@ provider:
 functions:
   hello:
     handler: handler.hello
+    environment:
+      yourName: 'Ric'
     events:
       - http: GET /hello
   resize:
@@ -71,6 +73,25 @@ functions:
           event: s3:ObjectCreated:*
           rules:
             - prefix: image
+  upload:
+    handler: upload/index.upload
+    events:
+      - http:
+          method: get
+          path: upload
+  list:
+    handler: list/index.list
+    events:
+      - http:
+          method: get
+          path: list
+  show:
+    handler: show/index.show
+    events:
+      - http:
+          method: get
+          path: show
+
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
@@ -88,14 +109,15 @@ functions:
 #    environment:
 #      variable2: value2
 
-# you can add CloudFormation resource templates here
-#resources:
-#  Resources:
-#    NewResource:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: my-new-bucket
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"
+resources:
+  Resources:
+    S3BucketNgdworkshopuploads:
+      Properties:
+        CorsConfiguration:
+          CorsRules:
+            - AllowedMethods:
+                - PUT
+              AllowedOrigins:
+                - "*"
+              AllowedHeaders:
+                - "*"
