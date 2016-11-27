@@ -14,7 +14,7 @@ You need to have installed and working knowledge of:
 Code and output will be highlighted in the following way:
 
 ```
-some command to Running
+some command to run
 ....
 or some output
 ```
