@@ -1,6 +1,66 @@
 # Serverless Workshop
 
-## Types of events
+## Events
+Events are basically payloads delivered to you function in a JSON wrapper. Remember when we created the project there was a file called ```event.json``` well that is test data we could use in our application. An event may be POST data delivered over a HTTP request or the SQL in a kineses stream.
+
+We can test this by adding a few lines into our ```handler.js``` file. Consider the following:
+
+```
+'use strict';
+
+module.exports.hello = (event, context, callback) => {
+
+  console.log('value1 =', event.key1);
+  console.log('value2 =', event.key2);
+  console.log('value3 =', event.key3);  
+.........
+```
+
+These three event.keys relate directly to the values in ```event.js```. Go ahead and run:
+
+```
+serverless deploy
+serverless invoke -f hello --path event.json
+serverless logs -f hello
+```
+
+Notice we've added ```--path event.json``` to the invoke command, this supplies the data in event.json to your invokation. It also means you can have different json files for different functions to enable the tests.
+
+After running you'll see some log out put with your values in:
+
+```
+START RequestId: a839b8fa-b5b2-11e6-ad19-8b5de89fee27 Version: $LATEST
+2016-11-28 21:36:01.272 (+00:00)	a839b8fa-b5b2-11e6-ad19-8b5de89fee27	value1 = value1
+2016-11-28 21:36:01.272 (+00:00)	a839b8fa-b5b2-11e6-ad19-8b5de89fee27	value2 = value2
+2016-11-28 21:36:01.272 (+00:00)	a839b8fa-b5b2-11e6-ad19-8b5de89fee27	value3 = value3
+2016-11-28 21:36:01.272 (+00:00)	a839b8fa-b5b2-11e6-ad19-8b5de89fee27	our first log
+END RequestId: a839b8fa-b5b2-11e6-ad19-8b5de89fee27
+REPORT RequestId: a839b8fa-b5b2-11e6-ad19-8b5de89fee27	Duration: 0.68 ms	Billed Duration: 100 ms 	Memory Size: 1024 MB	Max Memory Used: 15 MB
+```
+Have a play and edit the data in ```event.js``` for something more meaningful and try again.
+
+__Note:__ Sometimes the logs take a few seconds to show so you may need to run the log command a few times.
+
+## Context
+Further to event data there is also context data passed in. The context is a way of getting useful data about the current running function. It provides details such as:
+
+ - How much time is remaining before AWS Lambda terminates your Lambda function (timeout is one of the Lambda function configuration properties).
+ - The CloudWatch log group and log stream associated with the Lambda function that is executing.
+ - The AWS request ID returned to the client that invoked the Lambda function. You can use the request ID for any follow up inquiry with AWS support.
+ - If the Lambda function is invoked through AWS Mobile SDK, you can learn more about the mobile application calling the Lambda function.
+
+To get at this data you can add this to your function:
+
+```
+    console.log('remaining time =', context.getRemainingTimeInMillis());
+    console.log('functionName =', context.functionName);
+    console.log('AWSrequestID =', context.awsRequestId);
+    console.log('logGroupName =', context.logGroupName);
+    console.log('logStreamName =', context.logStreamName);
+    console.log('clientContext =', context.clientContext);
+```
+
+## Triggers
 So far we've manually invoked our Lambda functions, but it the real world we want these to be triggered when something happens. Lambda has built in methods for this, a trigger can be from:
 
  - API Gateway
@@ -11,7 +71,7 @@ So far we've manually invoked our Lambda functions, but it the real world we wan
 
 We are going to look at two methods today, the API gateway and and S3 event.
 
-## API gateway
+### API gateway
 Lets first of all modify our serverless.yml file so that Lambda knows to listen for a trigger when we use API gateway. Modify the functions section like below:
 
 ```
@@ -49,7 +109,7 @@ functions:
 ```
 You'll notice some extra info this time under endpoints. This is our API gateway URL, and this URL is what we'll use to invoke the function. Go ahead and browse to your URL. You should see your HTML being returned.
 
-## S3
+### S3
 We've seen how a simple web request can trigger a lambda function but how about we do something more fun. Lets trigger a function when we upload a file to S3. To do this we are going to create a new function. Create a new folder in your code directory called resize and inside that create a file called index.js with the following content:
 
 ```
