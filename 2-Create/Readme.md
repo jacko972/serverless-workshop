@@ -28,7 +28,7 @@ This is your code and where your function lives it houses the main function that
 #### serverless.yml
 This is your config file to control how the project is deployed. What's happening under the hood is that the serverless framework is actually constructing AWS CloudFormation for you and using that to deploy your lambda function.
 
-**note: beware of tabs in these files try and use spaces to avoid parsing errors**
+__Note: __ beware of tabs in these files try and use spaces to avoid parsing errors
 
 ### A few tweaks to serverless.yml
 

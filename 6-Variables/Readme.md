@@ -61,7 +61,7 @@ module.exports.hello = (event, context, callback) => {
 
 You can see in the above code that you use the ```process.env.VARIABLE``` call to get the variables you have defined.
 
-**Note:** When reading the documentation don't confuse environmental variables with serverless variables system which allows you to add dynamic data into your ```serverless.yml```
+__Note:__ When reading the documentation don't confuse environmental variables with serverless variables system which allows you to add dynamic data into your ```serverless.yml```
 
 ---
 Ric Harvey - ngineered.co.uk 2016

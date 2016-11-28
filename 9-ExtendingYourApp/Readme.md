@@ -216,7 +216,7 @@ module.exports.show = function (event, context, callback) {
 ```
 This also need you to change the BUCKET variable.
 
-**Note:** you shoul log ino the AWS console and go to S3 then select the previously uploaded images and make them public.
+__Note:__ you shoul log ino the AWS console and go to S3 then select the previously uploaded images and make them public.
 
 Now Deploy your application and you'll see you have a lot more endpoints available:
 

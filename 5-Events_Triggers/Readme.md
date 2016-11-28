@@ -121,7 +121,7 @@ We also need to give your function permissions to write to the S3 bucket. Edit t
       Resource: "*"
 ```
 
-**BUT WAIT** Those of you with a keen eye will have noticed that our javascript has some requirements. One being the aws-sdk the other being gm (for imagemagick). The instances your code runs on already include the aws-sdk but not gm. SO how do we tell it to install. Its actually pretty simple. You need to include a ```package.json``` file in your root directory withthe following content:
+__BUT WAIT__ Those of you with a keen eye will have noticed that our javascript has some requirements. One being the aws-sdk the other being gm (for imagemagick). The instances your code runs on already include the aws-sdk but not gm. SO how do we tell it to install. Its actually pretty simple. You need to include a ```package.json``` file in your root directory withthe following content:
 ```
 {
   "dependencies": {
@@ -145,7 +145,7 @@ Log into the AWS console and navigate to S3 and find you're bucket. I've include
 
 Once uploaded refresh the bucket and you should see a small version of the file has also been created!
 
-**note:** if you're uploading different images be sure to prefix them with image-
+__Note:__ if you're uploading different images be sure to prefix them with image-
 
 ---
 Ric Harvey - ngineered.co.uk 2016

@@ -24,6 +24,8 @@ provider:
 # you can overwrite defaults here
 #  stage: dev
   region: eu-west-1
+  apiKeys:
+    - XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -64,7 +66,10 @@ functions:
     environment:
       yourName: 'Ric'
     events:
-      - http: GET /hello
+      - http: 
+          method: GET
+          path: /hello
+          private: true
   resize:
     handler: resize/index.resize
     events:
