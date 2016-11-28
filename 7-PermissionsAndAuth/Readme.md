@@ -25,7 +25,7 @@ You should end up generating a setting like ```dynamodb:*	``` which you can easi
     - Effect: Allow
       Action:
         - s3:*
-        - dunamodb:*
+        - dynamodb:*
       Resource: "*"
 ```
 
@@ -112,9 +112,9 @@ resources:
                     - ec2:DetachNetworkInterface
                     - ec2:DeleteNetworkInterface
                   Resource: "*"
-    ```
+```
 ## Authentication
-So far we've created public accessible functions via API gateway that anyone with the correct URL can trigger. However it is possible to lock this down to only authorised users. In order to do this you need to create an API key in the AWS API Gateway console in your browser.once you have this key copy it as we'll need to ad dit to your ```serverless.yml``` file. When creating the key you'll need to assign that key to your API (app name) and to the dev stage as thats what we are currently working with.
+So far we've created public accessible functions via API gateway that anyone with the correct URL can trigger. However it is possible to lock this down to only authorised users. In order to do this you need to create an API key in the AWS API Gateway console in your browser. Once you have this key copy it as we'll need to ad dit to your ```serverless.yml``` file. When creating the key you'll need to assign that key to your API (app name) and to the dev stage as thats what we are currently working with.
 
 Now in ```serverless.yml``` you'll need to add your API key to the provider section. Note this can be a list of many keys.
 
@@ -150,7 +150,7 @@ functions:
           private: true
 ```
 
-Now run ```serverless deploy``` and once its deployed try browsing to your hello function API URL.
+Now run ```serverless deploy``` and once it's deployed try browsing to your hello function API URL.
 
 You now should get a message in JSON that looks like the following:
 
@@ -162,7 +162,7 @@ Now if you head over to [https://www.getpostman.com/](https://www.getpostman.com
 
 __Note: __ I had to capitalise X-API-Key to make it work.
 
-Now when you click send postman should return the HTML rather than a forbidden message.
+Now when you click send, postman should return the HTML rather than a forbidden message.
 
 ---
 Ric Harvey - ngineered.co.uk 2016
