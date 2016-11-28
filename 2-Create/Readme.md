@@ -20,7 +20,7 @@ Now lets bootstrap the serverless scaffolding:
 So lets have a look what this has done. You'll notice 3 new files in your directory.
 
 #### event.json
-This file contains test data for for when triggering your function. We wont cover or modify this file today.
+This file contains test data for for when triggering your function. We'll get to this later but its basically a JSON wrapper of POST data to your function.
 
 #### handler.js
 This is your code and where your function lives it houses the main function that is invoked by lambda.
