@@ -2,7 +2,7 @@
 This Workshop is designed to teach yo the basics of how to use the serverless framework to build and deploy applications. Its not a lesson in coding in JavaScript / nodeJS by any means so please feel free to build on these examples and improve along the way to aid your learning. Also if you spot any mistakes or have enhancements please submit a pull request via GitHub.
 
 ## The workshop
-During this workshop we are going to build a simple application, we'll start with hello world and move on to develop a application that resizes images when they are uploaded to S3. By the end of the exercises you should be confident in using the serverless framework to create new, deploy and debug functions that are running in AWS Lambda.
+During this workshop we are going to build a simple application, we'll start with hello world and move on to develop an application that resizes images when they are uploaded to S3. By the end of the exercises you should be confident in using the serverless framework to create new, deploy and debug functions that are running in AWS Lambda.
 
 We'll build:
 

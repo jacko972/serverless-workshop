@@ -73,7 +73,7 @@ resources:
 
 The thing to note here is that the S3 Bucket parameter usedin resources is a little odd. Its the name of your bucket with all the - or _ removed and you need to prefix it with S3Bucket and capitalise the first letter of the bucket name.
 
-Now lets include the code for upload, create a folder called ```upload``` and a filein that folder called index.js with the following code:
+Now lets include the code for upload, create a folder called ```upload``` and a file in that folder called index.js with the following code:
 
 ```
 const AWS = require('aws-sdk')
@@ -182,7 +182,7 @@ module.exports.list = function (event, context, callback) {
 ```
 Yet again tweak the variable of your BUCKET.
 
-Now create the ```show``` folder nd the index.js file:
+Now create the ```show``` folder and the index.js file:
 
 ```
 'use strict'

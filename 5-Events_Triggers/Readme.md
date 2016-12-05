@@ -16,7 +16,7 @@ module.exports.hello = (event, context, callback) => {
 .........
 ```
 
-These three event.keys relate directly to the values in ```event.js```. Go ahead and run:
+These three event.keys relate directly to the values in ```event.json```. Go ahead and run:
 
 ```
 serverless deploy
@@ -37,7 +37,7 @@ START RequestId: a839b8fa-b5b2-11e6-ad19-8b5de89fee27 Version: $LATEST
 END RequestId: a839b8fa-b5b2-11e6-ad19-8b5de89fee27
 REPORT RequestId: a839b8fa-b5b2-11e6-ad19-8b5de89fee27	Duration: 0.68 ms	Billed Duration: 100 ms 	Memory Size: 1024 MB	Max Memory Used: 15 MB
 ```
-Have a play and edit the data in ```event.js``` for something more meaningful and try again.
+Have a play and edit the data in ```event.json``` for something more meaningful and try again.
 
 __Note:__ Sometimes the logs take a few seconds to show so you may need to run the log command a few times.
 

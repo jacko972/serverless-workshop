@@ -50,7 +50,7 @@ To roll back to a previous version just make a note of its time stamp and run:
 ```
 serverless rollback -t 1480111313230
 ```
-You'll get conformation of the rollback
+You'll get confirmation of the rollback
 ```
 Serverless: Updating Stack...
 Serverless: Checking Stack update progress...

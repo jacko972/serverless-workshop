@@ -87,7 +87,7 @@ module.exports.hello = (event, context, callback) => {
   <html>
     <body>
 	<h1>Serverless Workshop</h1>
-	<p>hello world of serverless</h1>
+	<p>hello world of serverless</p>
     </body>
   </html>`
 
@@ -143,7 +143,7 @@ output:
     "headers": {
         "Content-Type": "text/html"
     },
-    "body": "\n  <html>\n    <body>\n\t<h1>Serverless Workshop</h1>\n\t<p>hello world of serverless</p>\n    </body>\n  </html>"
+    "body": "\n  <html>\n    <body>\n\t<h1>Serverless Workshop</h1>\n\t<p>hello world of serverless</h1>\n    </body>\n  </html>"
 }
 ```
 
